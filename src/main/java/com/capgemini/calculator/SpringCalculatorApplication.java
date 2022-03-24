@@ -1,6 +1,6 @@
 package com.capgemini.calculator;
 
-import com.capgemini.calculator.services.MasterService;
+import com.capgemini.calculator.services.CalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +19,7 @@ public class SpringCalculatorApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		MasterService masterService = applicationContext.getBean(MasterService.class);
-		masterService.executeOperation();
+		CalculatorService calculatorService = applicationContext.getBean(CalculatorService.class);
+		calculatorService.executeOperation();
 	}
 }

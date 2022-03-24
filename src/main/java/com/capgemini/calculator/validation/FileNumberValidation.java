@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class FileNumberValidation implements NumberValidation{
     @Override
-    public boolean isNotNumeric(String stringToNumber) {
+    public void isNotNumeric(String stringToNumber) {
         try {
             Integer.parseInt(stringToNumber);
         } catch (NumberFormatException e) {
-            return true;
+            throw new NumberFormatException("You should have entered numbers");
         }
-        return false;
+
     }
 }

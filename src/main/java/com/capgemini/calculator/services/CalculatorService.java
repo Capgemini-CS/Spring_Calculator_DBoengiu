@@ -10,20 +10,20 @@ import org.springframework.stereotype.Service;
 import org.tinylog.Logger;
 
 @Service
-public class MasterService implements MasterInterface {
+public class CalculatorService implements CalculatorInterface {
 
     int firstNumber;
     int secondNumber;
     String operator;
 
-    private FileInput fileInput;
+    private final FileInput fileInput;
     private final FileDataValidation fileDataValidation;
     private final FileOperatorValidation fileOperatorValidation;
     private final FileNumberValidation fileNumberValidation;
-    private CalculatorCalculation calculatorCalculation;
+    private final CalculatorCalculation calculatorCalculation;
     private final CalculatorOutput calculatorOutput;
 
-    public MasterService(FileInput fileInput, FileDataValidation fileDataValidation, FileOperatorValidation fileOperatorValidation, FileNumberValidation fileNumberValidation, CalculatorCalculation calculatorCalculation, CalculatorOutput calculatorOutput) {
+    public CalculatorService(FileInput fileInput, FileDataValidation fileDataValidation, FileOperatorValidation fileOperatorValidation, FileNumberValidation fileNumberValidation, CalculatorCalculation calculatorCalculation, CalculatorOutput calculatorOutput) {
         this.fileInput = fileInput;
         this.fileDataValidation = fileDataValidation;
         this.fileOperatorValidation = fileOperatorValidation;
@@ -38,14 +38,16 @@ public class MasterService implements MasterInterface {
         String fileLine = fileInput.getFileLine();
         String[] fileAttributes = fileLine.split(",");
 
-        fileDataValidation.checkLength(fileAttributes);
-        fileDataValidation.checkIfNull(fileAttributes);
-        fileOperatorValidation.checkAllowedOperand(fileAttributes);
-
-        if (fileNumberValidation.isNotNumeric(fileAttributes[0]) || fileNumberValidation.isNotNumeric(fileAttributes[1])) {
-            Logger.error("You should have introduced numbers");
-            System.exit(0);
+        try {
+            fileDataValidation.checkLength(fileAttributes);
+            fileDataValidation.checkIfNull(fileAttributes);
+            fileOperatorValidation.checkAllowedOperand(fileAttributes);
+            fileNumberValidation.isNotNumeric(fileAttributes[0]);
+            fileNumberValidation.isNotNumeric(fileAttributes[1]);
+        } catch (RuntimeException e) {
+            Logger.error(e.getMessage());
         }
+
 
         firstNumber = fileInput.getFirstNumber();
         secondNumber = fileInput.getSecondNumber();

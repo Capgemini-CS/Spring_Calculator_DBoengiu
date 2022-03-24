@@ -11,4 +11,9 @@ public class DivisionService implements Operation{
         }
         return (double) firstNumber / secondNumber;
     }
+
+    @Override
+    public String whoAmI() {
+        return "/";
+    }
 }

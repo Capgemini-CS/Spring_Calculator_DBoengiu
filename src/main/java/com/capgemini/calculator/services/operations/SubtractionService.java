@@ -8,4 +8,9 @@ public class SubtractionService implements Operation {
     public double execute(double firstNumber, double secondNumber) {
         return firstNumber - secondNumber;
     }
+
+    @Override
+    public String whoAmI() {
+        return "-";
+    }
 }
